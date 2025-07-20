@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inclusive Metaverse Platform - India's First</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header with Logo and Navigation -->
+    <header id="main-header">
+        <div class="logo">
+            <img src="logo.jpg" alt="Inclusive Metaverse Logo">
+            <h1>Inclusive Metaverse</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" id="home-link">Home</a></li>
+                <li><a href="#" id="about-link">About Us</a></li>
+                <li><a href="#" id="events-link">Events</a></li>
+                <li><a href="#" id="support-link">Support</a></li>
+                <li><a href="#" id="login-link" class="highlight-btn">Login / Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Accessibility Controls Panel -->
+    <div class="accessibility-panel">
+        <button id="accessibility-toggle" aria-label="Toggle Accessibility Menu">
+            <i class="fas fa-universal-access"></i>
+        </button>
+        <div class="accessibility-options">
+            <h3>Accessibility Options</h3>
+            <div class="option-group">
+                <label>Text Size</label>
+                <button id="text-size-increase" aria-label="Increase Text Size"><i class="fas fa-plus"></i> A</button>
+                <button id="text-size-decrease" aria-label="Decrease Text Size"><i class="fas fa-minus"></i> A</button>
+            </div>
+            <div class="option-group">
+                <label>Display Mode</label>
+                <button id="high-contrast" aria-label="Toggle High Contrast Mode"><i class="fas fa-adjust"></i> High Contrast</button>
+                <button id="colorblind-mode" aria-label="Toggle Colorblind Mode"><i class="fas fa-eye"></i> Colorblind Mode</button>
+            </div>
+            <div class="option-group">
+                <label>Audio Assistance</label>
+                <button id="text-to-speech" aria-label="Text to Speech"><i class="fas fa-volume-up"></i> Read Aloud</button>
+                <button id="screen-reader-mode" aria-label="Screen Reader Optimization"><i class="fas fa-braille"></i> Screen Reader Mode</button>
+            </div>
+            <div class="option-group">
+                <label>Motion & Animation</label>
+                <button id="reduce-motion" aria-label="Reduce Motion"><i class="fas fa-running"></i> Reduce Motion</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Platform Description Banner -->
+    <div id="platform-description" class="description-panel">
+        <h2>Welcome to India's First Inclusive Metaverse</h2>
+        <p>We're India's first and foremost Metaverse platform, committed to a safe environment for everyone regardless of their caste, class, gender, sexuality, religion, race, or disability. We're excited you might join our movement to build a fun and supportive world beyond identity-based discrimination.</p>
+        <button id="join-now-btn" class="cta-button">Join Our Community</button>
+    </div>
+
+    <!-- Login/Registration Modal with Inclusive Options -->
+    <div id="auth-container" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">×</span>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Login</button>
+                <button class="auth-tab" data-tab="register">Register</button>
+            </div>
+            
+            <div id="login-form" class="auth-form active">
+                <h2>Welcome Back!</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="login-email">Email or Username</label>
+                        <input type="text" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                        <div class="password-toggle">
+                            <input type="checkbox" id="show-password">
+                            <label for="show-password">Show password</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="submit-btn">Login</button>
+                    </div>
+                    <div class="form-footer">
+                        <a href="#" id="forgot-password">Forgot Password?</a>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="register-form" class="auth-form">
+                <h2>Join Our Inclusive Community</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="register-username">Choose a Username</label>
+                        <input type="text" id="register-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email Address</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Create Password</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Optional Identity Information</label>
+                        <p class="form-help">We respect your privacy. All identity information is optional and can be kept private.</p>
+                        
+                        <div class="identity-options">
+                            <div class="identity-option">
+                                <label for="pronouns">Preferred Pronouns</label>
+                                <select id="pronouns">
+                                    <option value="">Prefer not to say</option>
+                                    <option value="he/him">He/Him</option>
+                                    <option value="she/her">She/Her</option>
+                                    <option value="they/them">They/Them</option>
+                                    <option value="custom">Custom...</option>
+                                </select>
+                                <input type="text" id="custom-pronouns" placeholder="Enter custom pronouns" class="hidden">
+                            </div>
+                            
+                            <div class="identity-option">
+                                <label for="accessibility-needs">Accessibility Needs</label>
+                                <select id="accessibility-needs" multiple>
+                                    <option value="screen-reader">Screen Reader Support</option>
+                                    <option value="color-contrast">High Color Contrast</option>
+                                    <option value="reduced-motion">Reduced Motion</option>
+                                    <option value="captions">Always Show Captions</option>
+                                    <option value="keyboard-nav">Keyboard Navigation</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="consent-checkbox">
+                            <input type="checkbox" id="terms-consent" required>
+                            <label for="terms-consent">I agree to the <a href="#">Terms of Service</a> and <a href="#">Community Guidelines</a></label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="submit-btn">Create Account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Avatar Creation Modal -->
+    <div id="avatar-creator" class="modal">
+        <div class="modal-content avatar-creator-content">
+            <span class="close-modal">×</span>
+            <h2>Create Your Inclusive Avatar</h2>
+            
+            <div class="avatar-preview">
+                <div id="avatar-model-container"></div>
+                <div class="avatar-controls">
+                    <button id="rotate-left"><i class="fas fa-undo"></i></button>
+                    <button id="rotate-right"><i class="fas fa-redo"></i></button>
+                    <button id="zoom-in"><i class="fas fa-search-plus"></i></button>
+                    <button id="zoom-out"><i class="fas fa-search-minus"></i></button>
+                </div>
+            </div>
+            
+            <div class="avatar-options">
+                <div class="avatar-section">
+                    <h3>Body Type</h3>
+                    <div class="option-grid">
+                        <button class="avatar-option" data-option="body-1">Type 1</button>
+                        <button class="avatar-option" data-option="body-2">Type 2</button>
+                        <button class="avatar-option" data-option="body-3">Type 3</button>
+                        <button class="avatar-option" data-option="body-4">Type 4</button>
+                        <button class="avatar-option" data-option="body-custom">Custom</button>
+                    </div>
+                    <div id="body-custom-controls" class="custom-controls hidden">
+                        <label>Height: <input type="range" min="0" max="100" value="50" id="height-slider"></label>
+                        <label>Build: <input type="range" min="0" max="100" value="50" id="build-slider"></label>
+                    </div>
+                </div>
+                
+                <div class="avatar-section">
+                    <h3>Skin Tone</h3>
+                    <div class="color-picker">
+                        <input type="color" id="skin-tone-picker" value="#e0c8b0">
+                        <div class="preset-colors">
+                            <button class="color-preset" style="background-color: #f5e8d7;"></button>
+                            <button class="color-preset" style="background-color: #e0c8b0;"></button>
+                            <button class="color-preset" style="background-color: #c19a6b;"></button>
+                            <button class="color-preset" style="background-color: #a97c50;"></button>
+                            <button class="color-preset" style="background-color: #8d5524;"></button>
+                            <button class="color-preset" style="background-color: #573719;"></button>
+                            <button class="color-preset" style="background-color: #3a2410;"></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="avatar-section">
+                    <h3>Facial Features</h3>
+                    <div class="option-grid">
+                        <button class="avatar-option" data-option="face-1">Type 1</button>
+                        <button class="avatar-option" data-option="face-2">Type 2</button>
+                        <button class="avatar-option" data-option="face-3">Type 3</button>
+                        <button class="avatar-option" data-option="face-4">Type 4</button>
+                        <button class="avatar-option" data-option="face-5">Type 5</button>
+                    </div>
+                </div>
+                
+                <div class="avatar-section">
+                    <h3>Hairstyle</h3>
+                    <div class="option-grid">
+                        <button class="avatar-option" data-option="hair-1">Style 1</button>
+                        <button class="avatar-option" data-option="hair-2">Style 2</button>
+                        <button class="avatar-option" data-option="hair-3">Style 3</button>
+                        <button class="avatar-option" data-option="hair-4">Style 4</button>
+                        <button class="avatar-option" data-option="hair-5">Style 5</button>
+                        <button class="avatar-option" data-option="hair-6">Style 6</button>
+                        <button class="avatar-option" data-option="hair-7">Style 7</button>
+                        <button class="avatar-option" data-option="hair-8">Style 8</button>
+                    </div>
+                    <div class="color-picker">
+                        <label>Hair Color:</label>
+                        <input type="color" id="hair-color-picker" value="#4a3000">
+                    </div>
+                </div>
+                
+                <div class="avatar-section">
+                    <h3>Clothing</h3>
+                    <div class="option-grid">
+                        <button class="avatar-option" data-option="clothing-1">Casual</button>
+                        <button class="avatar-option" data-option="clothing-2">Formal</button>
+                        <button class="avatar-option" data-option="clothing-3">Sporty</button>
+                        <button class="avatar-option" data-option="clothing-4">Traditional</button>
+                        <button class="avatar-option" data-option="clothing-5">Fantasy</button>
+                    </div>
+                    <div class="color-picker">
+                        <label>Primary Color:</label>
+                        <input type="color" id="clothing-primary-color" value="#3a81e6">
+                    </div>
+                    <div class="color-picker">
+                        <label>Secondary Color:</label>
+                        <input type="color" id="clothing-secondary-color" value="#ffffff">
+                    </div>
+                </div>
+                
+                <div class="avatar-section">
+                    <h3>Mobility Aids (Optional)</h3>
+                    <div class="option-grid">
+                        <button class="avatar-option" data-option="mobility-none">None</button>
+                        <button class="avatar-option" data-option="mobility-wheelchair">Wheelchair</button>
+                        <button class="avatar-option" data-option="mobility-cane">Cane</button>
+                        <button class="avatar-option" data-option="mobility-crutches">Crutches</button>
+                        <button class="avatar-option" data-option="mobility-prosthetic-arm">Prosthetic Arm</button>
+                        <button class="avatar-option" data-option="mobility-prosthetic-leg">Prosthetic Leg</button>
+                    </div>
+                </div>
+                
+                <div class="avatar-section">
+                    <h3>Cultural Elements (Optional)</h3>
+                    <div class="option-grid">
+                        <button class="avatar-option" data-option="cultural-none">None</button>
+                        <button class="avatar-option" data-option="cultural-bindi">Bindi</button>
+                        <button class="avatar-option" data-option="cultural-turban">Turban</button>
+                        <button class="avatar-option" data-option="cultural-hijab">Hijab</button>
+                        <button class="avatar-option" data-option="cultural-kippah">Kippah</button>
+                        <button class="avatar-option" data-option="cultural-saree">Saree</button>
+                        <button class="avatar-option" data-option="cultural-dhoti">Dhoti</button>
+                        <button class="avatar-option" data-option="cultural-custom">Custom...</button>
+                    </div>
+                </div>
+                
+                <div class="avatar-section">
+                    <h3>Accessories (Optional)</h3>
+                    <div class="option-grid">
+                        <button class="avatar-option" data-option="acc-none">None</button>
+                        <button class="avatar-option" data-option="acc-glasses">Glasses</button>
+                        <button class="avatar-option" data-option="acc-sunglasses">Sunglasses</button>
+                        <button class="avatar-option" data-option="acc-hearing-aid">Hearing Aid</button>
+                        <button class="avatar-option" data-option="acc-jewelry">Jewelry</button>
+                        <button class="avatar-option" data-option="acc-hat">Hat</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="avatar-actions">
+                <button id="randomize-avatar">Randomize</button>
+                <button id="save-avatar" class="primary-btn">Save Avatar</button>
+                <button id="cancel-avatar">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Metaverse Interface -->
+    <div id="metaverse-container">
+        <canvas id="metaverse-canvas"></canvas>
+        
+        <!-- Metaverse HUD (Heads Up Display) -->
+        <div id="metaverse-hud">
+            <div id="user-info">
+                <div id="user-avatar"></div>
+                <div id="user-details">
+                    <span id="user-name">Guest User</span>
+                    <span id="user-status">
+                        <select id="status-selector">
+                            <option value="online">Online</option>
+                            <option value="away">Away</option>
+                            <option value="busy">Busy</option>
+                            <option value="invisible">Invisible</option>
+                        </select>
+                    </span>
+                </div>
+            </div>
+            
+            <div id="navigation-controls">
+                <button id="move-forward"><i class="fas fa-arrow-up"></i></button>
+                <button id="move-left"><i class="fas fa-arrow-left"></i></button>
+                <button id="move-right"><i class="fas fa-arrow-right"></i></button>
+                <button id="move-backward"><i class="fas fa-arrow-down"></i></button>
+                <button id="jump"><i class="fas fa-angle-double-up"></i></button>
+            </div>
+            
+            <div id="interaction-controls">
+                <button id="interact-btn"><i class="fas fa-hand-pointer"></i> Interact</button>
+                <button id="emote-btn"><i class="fas fa-smile"></i> Emote</button>
+                <button id="sit-btn"><i class="fas fa-chair"></i> Sit</button>
+            </div>
+        </div>
+
+        <!-- Safe Space Selection Panel -->
+        <div id="spaces-panel">
+            <h3>Community Spaces</h3>
+            <div class="space-search">
+                <input type="text" id="space-search" placeholder="Search spaces...">
+                <button id="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+            <ul>
+                <li data-space="general" class="active">
+                    <i class="fas fa-globe"></i>
+                    <span>General Hub</span>
+                    <span class="user-count">124 users</span>
+                </li>
+                <li data-space="lgbtq">
+                    <i class="fas fa-rainbow"></i>
+                    <span>LGBTQ+ Space</span>
+                    <span class="user-count">47 users</span>
+                </li>
+                <li data-space="disability">
+                    <i class="fas fa-universal-access"></i>
+                    <span>Accessibility Community</span>
+                    <span class="user-count">32 users</span>
+                </li>
+                <li data-space="cultural">
+                    <i class="fas fa-landmark"></i>
+                    <span>Cultural Exchange</span>
+                    <span class="user-count">56 users</span>
+                </li>
+                <li data-space="workshop">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Diversity Workshops</span>
+                    <span class="user-count">18 users</span>
+                </li>
+                <li data-space="meditation">
+                    <i class="fas fa-om"></i>
+                    <span>Meditation Garden</span>
+                    <span class="user-count">29 users</span>
+                </li>
+                <li data-space="gaming">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Inclusive Gaming</span>
+                    <span class="user-count">63 users</span>
+                </li>
+                <li data-space="art">
+                    <i class="fas fa-palette"></i>
+                    <span>Creative Arts Studio</span>
+                    <span class="user-count">41 users</span>
+                </li>
+            </ul>
+            <button id="create-space-btn"><i class="fas fa-plus"></i> Create New Space</button>
+        </div>
+
+        <!-- Real-time Moderation Tools -->
+        <div id="moderation-tools">
+            <button id="report-btn" class="mod-btn">
+                <i class="fas fa-flag"></i>
+                <span>Report</span>
+            </button>
+            <button id="block-btn" class="mod-btn">
+                <i class="fas fa-ban"></i>
+                <span>Block</span>
+            </button>
+            <button id="help-btn" class="mod-btn">
+                <i class="fas fa-question-circle"></i>
+                <span>Help</span>
+            </button>
+            <button id="settings-btn" class="mod-btn">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </button>
+        </div>
+
+        <!-- Chat Interface with Moderation -->
+        <div id="chat-container">
+            <div id="chat-header">
+                <h3>Community Chat</h3>
+                <div class="chat-controls">
+                    <button id="chat-minimize"><i class="fas fa-minus"></i></button>
+                    <button id="chat-expand"><i class="fas fa-expand"></i></button>
+                </div>
+            </div>
+            
+            <div id="chat-tabs">
+                <button class="chat-tab active" data-tab="global">Global</button>
+                <button class="chat-tab" data-tab="local">Local</button>
+                <button class="chat-tab" data-tab="private">Private</button>
+                <button id="new-chat-tab"><i class="fas fa-plus"></i></button>
+            </div>
+            
+            <div id="chat-messages">
+                <div class="system-message">Welcome to the Inclusive Metaverse! Please be respectful of all community members.</div>
+                <div class="chat-message">
+                    <span class="message-sender">Moderator:</span>
+                    <span class="message-content">Today's community event starts at 3 PM IST in the Cultural Exchange space!</span>
+                </div>
+                <div class="chat-message">
+                    <span class="message-sender">ArtLover22:</span>
+                    <span class="message-content">Has anyone checked out the new art gallery? The accessibility features are amazing!</span>
+                </div>
+                <div class="chat-message">
+                    <span class="message-sender">TechGuru:</span>
+                    <span class="message-content">I'm hosting a workshop on inclusive design tomorrow. Everyone is welcome!</span>
+                </div>
+            </div>
+            
+            <div id="chat-input-area">
+                <button id="emoji-btn"><i class="fas fa-smile"></i></button>
+                <input type="text" id="chat-input" placeholder="Type your message...">
+                <button id="voice-input"><i class="fas fa-microphone"></i></button>
+                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+            
+            <div id="emoji-picker" class="hidden">
+                <div class="emoji-categories">
+                    <button data-category="smileys" class="active">😊</button>
+                    <button data-category="people">👋</button>
+                    <button data-category="animals">🐶</button>
+                    <button data-category="food">🍎</button>
+                    <button data-category="activities">⚽</button>
+                    <button data-category="travel">🚗</button>
+                    <button data-category="objects">💡</button>
+                    <button data-category="symbols">❤️</button>
+                    <button data-category="flags">🏳️‍🌈</button>
+                </div>
+                <div class="emoji-list">
+                    <!-- Emojis will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div id="settings-panel" class="modal">
+        <div class="modal-content settings-content">
+            <span class="close-modal">×</span>
+            <h2>Settings</h2>
+            
+            <div class="settings-tabs">
+                <button class="settings-tab active" data-tab="privacy">Privacy</button>
+                <button class="settings-tab" data-tab="accessibility">Accessibility</button>
+                <button class="settings-tab" data-tab="display">Display</button>
+                <button class="settings-tab" data-tab="audio">Audio</button>
+                <button class="settings-tab" data-tab="language">Language</button>
+                <button class="settings-tab" data-tab="notifications">Notifications</button>
+            </div>
+            
+            <div id="privacy-settings" class="settings-section active">
+                <h3>Privacy Settings</h3>
+                
+                <div class="setting-group">
+                    <label for="anonymous-mode">Anonymous Mode</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="anonymous-mode">
+                        <span class="toggle-slider"></span>
+                    </div>
+                    <p class="setting-description">Hide your identity from other users. Your avatar will appear with a generic username.</p>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="identity-sharing">Identity Information Sharing</label>
+                    <select id="identity-sharing">
+                        <option value="none">Share Nothing</option>
+                        <option value="basic">Basic Info Only</option>
+                        <option value="full">Full Profile</option>
+                    </select>
+                    <p class="setting-description">Control what personal information is visible to other users.</p>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="location-sharing">Location Sharing</label>
+                    <select id="location-sharing">
+                        <option value="none">Don't Share</option>
+                        <option value="country">Country Only</option>
+                        <option value="city">City Level</option>
+                    </select>
+                    <p class="setting-description">Control whether your approximate location is shared.</p>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="activity-status">Activity Status</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="activity-status" checked>
+                        <span class="toggle-slider"></span>
+                    </div>
+                    <p class="setting-description">Show when you're online and active in the metaverse.</p>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="data-collection">Data Collection</label>
+                    <select id="data-collection">
+                        <option value="minimal">Minimal (Required Only)</option>
+                        <option value="standard">Standard (Improve Experience)</option>
+                        <option value="full">Full (Help Platform Development)</option>
+                    </select>
+                    <p class="setting-description">Control how much anonymous usage data we collect to improve the platform.</p>
+                </div>
+            </div>
+            
+            <div id="accessibility-settings" class="settings-section">
+                <!-- Accessibility settings will be similar to the accessibility panel -->
+            </div>
+            
+            <div id="display-settings" class="settings-section">
+                <!-- Display settings -->
+            </div>
+            
+            <div id="audio-settings" class="settings-section">
+                <!-- Audio settings -->
+            </div>
+            
+            <div id="language-settings" class="settings-section">
+                <h3>Language Settings</h3>
+                
+                <div class="setting-group">
+                    <label for="interface-language">Interface Language</label>
+                    <select id="interface-language">
+                        <option value="en">English</option>
+                        <option value="hi">हिन्दी (Hindi)</option>
+                        <option value="bn">বাংলা (Bengali)</option>
+                        <option value="te">తెలుగు (Telugu)</option>
+                        <option value="ta">தமிழ் (Tamil)</option>
+                        <option value="mr">मराठी (Marathi)</option>
+                        <option value="gu">ગુજરાતી (Gujarati)</option>
+                        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                        <option value="ml">മലയാളം (Malayalam)</option>
+                        <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+                        <option value="ur">اردو (Urdu)</option>
+                        <option value="es">Español (Spanish)</option>
+                        <option value="fr">Français (French)</option>
+                        <option value="zh">中文 (Chinese)</option>
+                        <option value="ar">العربية (Arabic)</option>
+                    </select>
+                    <p class="setting-description">Select your preferred language for the platform interface.</p>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="auto-translate">Auto-Translate Chat Messages</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="auto-translate">
+                        <span class="toggle-slider"></span>
+                    </div>
+                    <p class="setting-description">Automatically translate chat messages to your preferred language.</p>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="translation-language">Translation Language</label>
+                    <select id="translation-language">
+                        <!-- Same options as interface language -->
+                    </select>
+                    <p class="setting-description">Language to translate messages into.</p>
+                </div>
+            </div>
+            
+            <div id="notification-settings" class="settings-section">
+                <!-- Notification settings -->
+            </div>
+            
+            <div class="settings-actions">
+                <button id="save-settings" class="primary-btn">Save Settings</button>
+                <button id="reset-settings">Reset to Default</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Events Calendar Modal -->
+    <div id="events-modal" class="modal">
+        <div class="modal-content events-content">
+            <span class="close-modal">×</span>
+            <h2>Community Events</h2>
+            
+            <div class="calendar-controls">
+                <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                <h3 id="current-month">October 2023</h3>
+                <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+                <button id="today-btn">Today</button>
+                <button id="create-event-btn" class="primary-btn">Create Event</button>
+            </div>
+            
+            <div class="calendar-view">
+                <div class="calendar-header">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div class="calendar-days">
+                    <!-- Days will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="events-list">
+                <h3>Upcoming Events</h3>
+                <div class="event-item">
+                    <div class="event-date">
+                        <span class="event-day">15</span>
+                        <span class="event-month">Oct</span>
+                    </div>
+                    <div class="event-details">
+                        <h4 class="event-title">Diversity in Tech Panel</h4>
+                        <p class="event-time">3:00 PM - 4:30 PM IST</p>
+                        <p class="event-location">Workshop Space</p>
+                    </div>
+                    <button class="event-rsvp">RSVP</button>
+                </div>
+                <div class="event-item">
+                    <div class="event-date">
+                        <span class="event-day">18</span>
+                        <span class="event-month">Oct</span>
+                    </div>
+                    <div class="event-details">
+                        <h4 class="event-title">Sign Language Workshop</h4>
+                        <p class="event-time">11:00 AM - 12:30 PM IST</p>
+                        <p class="event-location">Accessibility Community</p>
+                    </div>
+                    <button class="event-rsvp">RSVP</button>
+                </div>
+                <div class="event-item highlighted">
+                    <div class="event-date">
+                        <span class="event-day">22</span>
+                        <span class="event-month">Oct</span>
+                    </div>
+                    <div class="event-details">
+                        <h4 class="event-title">Cultural Celebration Day</h4>
+                        <p class="event-time">All Day</p>
+                        <p class="event-location">Throughout Metaverse</p>
+                    </div>
+                    <button class="event-rsvp">RSVP</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Event Modal -->
+    <div id="create-event-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">×</span>
+            <h2>Create a New Event</h2>
+            
+            <form id="event-form">
+                <div class="form-group">
+                    <label for="event-title">Event Title</label>
+                    <input type="text" id="event-title" required placeholder="Enter event name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-description">Description</label>
+                    <textarea id="event-description" rows="4" required placeholder="Tell people about your event"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="event-date">Date</label>
+                        <input type="date" id="event-date" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="start-time">Start Time</label>
+                        <input type="time" id="start-time" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="end-time">End Time</label>
+                        <input type="time" id="end-time" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-space">Location/Space</label>
+                    <select id="event-space" required>
+                        <option value="">Select a Space</option>
+                        <option value="general">General Hub</option>
+                        <option value="lgbtq">LGBTQ+ Space</option>
+                        <option value="disability">Accessibility Community</option>
+                        <option value="cultural">Cultural Exchange</option>
+                        <option value="workshop">Workshop Space</option>
+                        <option value="meditation">Meditation Garden</option>
+                        <option value="gaming">Gaming Arena</option>
+                        <option value="art">Creative Arts Studio</option>
+                        <option value="custom">Custom Location</option>
+                    </select>
+                    <input type="text" id="custom-location" class="hidden mt-2" placeholder="Enter custom location">
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-category">Category</label>
+                    <select id="event-category" required>
+                        <option value="workshop">Workshop</option>
+                        <option value="social">Social Gathering</option>
+                        <option value="educational">Educational</option>
+                        <option value="celebration">Celebration</option>
+                        <option value="support">Support Group</option>
+                        <option value="game">Game Event</option>
+                        <option value="art">Art/Performance</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Accessibility Features</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="accessibility" value="captions"> Live Captioning</label>
+                        <label><input type="checkbox" name="accessibility" value="signing"> Sign Language Interpretation</label>
+                        <label><input type="checkbox" name="accessibility" value="audio-desc"> Audio Description</label>
+                        <label><input type="checkbox" name="accessibility" value="text-alt"> Text Alternatives</label>
+                        <label><input type="checkbox" name="accessibility" value="motion-free"> Motion-Free Experience</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="event-privacy">Privacy Setting</label>
+                    <select id="event-privacy">
+                        <option value="public">Public - Anyone can join</option>
+                        <option value="space-members">Space Members Only</option>
+                        <option value="invite">Invite Only</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Upload Cover Image (Optional)</label>
+                    <div class="image-upload">
+                        <button type="button" id="upload-image-btn">Choose Image</button>
+                        <span id="image-filename">No file chosen</span>
+                        <input type="file" id="event-image" accept="image/*" class="hidden">
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="primary-btn">Create Event</button>
+                    <button type="button" id="cancel-event">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- New User Help Tour -->
+    <div id="help-tour" class="modal">
+        <div class="modal-content tour-content">
+            <div class="tour-slide active" data-slide="1">
+                <h2>Welcome to Inclusive Metaverse!</h2>
+                <p>Let's take a quick tour to help you get started in our accessible virtual world.</p>
+                <div class="tour-image">
+                    <img src="tour-1.png" alt="Welcome screen">
+                </div>
+                <div class="tour-actions">
+                    <button class="skip-tour">Skip Tour</button>
+                    <button class="next-tour">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <div class="tour-slide" data-slide="2">
+                <h2>Navigation Controls</h2>
+                <p>Use the WASD keys or the on-screen controls to move around. We also support alternative control schemes.</p>
+                <div class="tour-image">
+                    <img src="tour-2.png" alt="Navigation controls">
+                </div>
+                <div class="tour-actions">
+                    <button class="prev-tour"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button class="next-tour">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <div class="tour-slide" data-slide="3">
+                <h2>Accessibility Features</h2>
+                <p>Find our comprehensive accessibility tools in the panel on the left. You can adjust settings anytime.</p>
+                <div class="tour-image">
+                    <img src="tour-3.png" alt="Accessibility panel">
+                </div>
+                <div class="tour-actions">
+                    <button class="prev-tour"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button class="next-tour">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <div class="tour-slide" data-slide="4">
+                <h2>Community Spaces</h2>
+                <p>Join different spaces that match your interests or identity groups. Each space has its own rules and culture.</p>
+                <div class="tour-image">
+                    <img src="tour-4.png" alt="Community spaces">
+                </div>
+                <div class="tour-actions">
+                    <button class="prev-tour"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button class="next-tour">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <div class="tour-slide" data-slide="5">
+                <h2>Safety Features</h2>
+                <p>Our platform has robust moderation tools. You can report issues, block users, or get help at any time.</p>
+                <div class="tour-image">
+                    <img src="tour-5.png" alt="Safety features">
+                </div>
+                <div class="tour-actions">
+                    <button class="prev-tour"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button class="finish-tour primary-btn">Finish Tour</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer with Links and Information -->
+    <footer id="main-footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>About Inclusive Metaverse</h3>
+                <p>India's first metaverse that celebrates diversity in all its forms. We're building a world beyond discrimination.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Community Guidelines</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Accessibility Statement</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Code of Conduct</a></li>
+                    <li><a href="#">Moderation Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section contact">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-envelope"></i> contact@inclusivemetaverse.in</p>
+                <p><i class="fas fa-phone-alt"></i> +91 9876543210</p>
+                <p><i class="fas fa-map-marker-alt"></i> Bangalore, India</p>
+                <button id="feedback-btn" class="footer-btn">Give Feedback</button>
+                <button id="report-issue-btn" class="footer-btn">Report Issue</button>
+            </div>
+            
+            <div class="footer-section newsletter">
+                <h3>Stay Updated</h3>
+                <p>Subscribe to our newsletter for updates and events</p>
+                <form id="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2023 Inclusive Metaverse. All rights reserved. Designed with ♥ for India.</p>
+            <div class="footer-languages">
+                <select id="footer-language-selector">
+                    <option value="en">English</option>
+                    <option value="hi">हिन्दी</option>
+                    <option value="kn">ಕನ್ನಡ</option>
+                    <option value="ta">தமிழ்</option>
+                    <option value="te">తెలుగు</option>
+                    <option value="mr">मराठी</option>
+                    <option value="bn">বাংলা</option>
+                </select>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="scripts.js"></script>
+    <script src="avatar.js"></script>
+    <script src="metaverse.js"></script>
+    <script src="moderation.js"></script>
+    <script src="chat.js"></script>
+    <script src="accessibility.js"></script>
+    <script>
+        // Initialize Three.js scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('metaverse-canvas'),
+            antialias: true
+        });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        
+        // Basic lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+        
+        // Basic avatar for demonstration
+        const avatarGeometry = new THREE.BoxGeometry(1, 2, 1);
+        const avatarMaterial = new THREE.MeshBasicMaterial({ color: 0x3a81e6 });
+        const avatar = new THREE.Mesh(avatarGeometry, avatarMaterial);
+        scene.add(avatar);
+        
+        camera.position.z = 5;
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        // Moderation with TensorFlow Toxicity model
+        let toxicityModel;
+        async function loadToxicityModel() {
+            const threshold = 0.9;
+            toxicityModel = await toxicity.load(threshold);
+        }
+        loadToxicityModel();
+        
+        // Check messages for toxicity
+        async function checkMessageToxicity(message) {
+            if (!toxicityModel) return false;
+            
+            const predictions = await toxicityModel.classify([message]);
+            return predictions.some(prediction => prediction.results[0].match);
+        }
+        
+        // Initialize UI components
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle modals
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (modal.id !== 'metaverse-container') {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Login/Register toggle
+            const authTabs = document.querySelectorAll('.auth-tab');
+            authTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    authTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    document.querySelectorAll('.auth-form').forEach(form => {
+                        form.classList.remove('active');
+                    });
+                    document.getElementById(`${tabId}-form`).classList.add('active');
+                });
+            });
+            
+            // Show/hide accessibility panel
+            const accToggle = document.getElementById('accessibility-toggle');
+            const accOptions = document.querySelector('.accessibility-options');
+            accToggle.addEventListener('click', function() {
+                accOptions.classList.toggle('visible');
+            });
+            
+            // Avatar creator functionality
+            const pronounSelect = document.getElementById('pronouns');
+            const customPronouns = document.getElementById('custom-pronouns');
+            
+            pronounSelect.addEventListener('change', function() {
+                if (this.value === 'custom') {
+                    customPronouns.classList.remove('hidden');
+                    customPronouns.focus();
+                } else {
+                    customPronouns.classList.add('hidden');
+                }
+            });
+            
+            // Event listeners for avatar creation
+            document.getElementById('randomize-avatar').addEventListener('click', randomizeAvatar);
+            document.getElementById('save-avatar').addEventListener('click', saveAvatar);
+            
+            // Join now button
+            document.getElementById('join-now-btn').addEventListener('click', function() {
+                document.getElementById('auth-container').style.display = 'block';
+            });
+            
+            // Close modals
+            const closeButtons = document.querySelectorAll('.close-modal');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+        });
+        
+        // Helper functions
+        function randomizeAvatar() {
+            // Implementation for random avatar generation
+            console.log('Randomizing avatar...');
+        }
+        
+        function saveAvatar() {
+            // Implementation for saving avatar
+            console.log('Saving avatar...');
+            document.getElementById('avatar-creator').style.display = 'none';
+        }
+        // scripts.js - Add this to your existing JavaScript
+
+// User Database Simulation (in a real app, this would be a backend)
+let usersDatabase = [];
+let currentUser = null;
+
+// DOM Elements
+const authContainer = document.getElementById('auth-container');
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const loginLink = document.getElementById('login-link');
+const joinNowBtn = document.getElementById('join-now-btn');
+const closeModals = document.querySelectorAll('.close-modal');
+const userInfo = document.getElementById('user-info');
+const userAvatar = document.getElementById('user-avatar');
+const userName = document.getElementById('user-name');
+const avatarCreator = document.getElementById('avatar-creator');
+
+// Modal Management
+function showModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+}
+
+function hideModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Show auth modal when login/register links are clicked
+    loginLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        showModal('auth-container');
+    });
+    
+    joinNowBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showModal('auth-container');
+    });
+    
+    // Close modals
+    closeModals.forEach(button => {
+        button.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            if (modal) {
+                hideModal(modal.id);
+            }
+        });
+    });
+    
+    // Toggle password visibility
+    const showPassword = document.getElementById('show-password');
+    const loginPassword = document.getElementById('login-password');
+    
+    showPassword.addEventListener('change', function() {
+        loginPassword.type = this.checked ? 'text' : 'password';
+    });
+    
+    // Login Form Submission
+    loginForm.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        handleLogin();
+    });
+    
+    // Register Form Submission
+    registerForm.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        handleRegistration();
+    });
+    
+    // Custom pronouns toggle
+    document.getElementById('pronouns').addEventListener('change', function() {
+        const customPronouns = document.getElementById('custom-pronouns');
+        customPronouns.classList.toggle('hidden', this.value !== 'custom');
+    });
+});
+
+// Login Function
+async function handleLogin() {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    
+    // Validation
+    if (!email || !password) {
+        showAlert('Please fill in all fields', 'error');
+        return;
+    }
+    
+    // Simulate API call
+    try {
+        const user = await authenticateUser(email, password);
+        
+        // Login successful
+        currentUser = user;
+        updateUIAfterLogin(user);
+        hideModal('auth-container');
+        
+        // Show avatar creator if user doesn't have one
+        if (!user.avatar) {
+            showModal('avatar-creator');
+        }
+        
+        showAlert('Login successful!', 'success');
+    } catch (error) {
+        showAlert(error.message, 'error');
+    }
+}
+
+// Registration Function
+async function handleRegistration() {
+    const username = document.getElementById('register-username').value;
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+    const termsConsent = document.getElementById('terms-consent').checked;
+    
+    // Get optional fields
+    const pronounSelect = document.getElementById('pronouns');
+    const pronouns = pronounSelect.value === 'custom' 
+        ? document.getElementById('custom-pronouns').value 
+        : pronounSelect.value;
+    
+    const accessibilityNeeds = Array.from(document.getElementById('accessibility-needs').selectedOptions)
+        .map(option => option.value);
+    
+    // Validation
+    if (!username || !email || !password) {
+        showAlert('Please fill in all required fields', 'error');
+        return;
+    }
+    
+    if (!termsConsent) {
+        showAlert('You must agree to the terms and community guidelines', 'error');
+        return;
+    }
+    
+    if (password.length < 8) {
+        showAlert('Password must be at least 8 characters long', 'error');
+        return;
+    }
+    
+    // Simulate API call
+    try {
+        const user = await registerUser({
+            username,
+            email,
+            password,
+            pronouns,
+            accessibilityNeeds
+        });
+        
+        // Registration successful
+        currentUser = user;
+        updateUIAfterLogin(user);
+        hideModal('auth-container');
+        
+        // Show avatar creator for new users
+        showModal('avatar-creator');
+        
+        showAlert('Registration successful! Please customize your avatar.', 'success');
+    } catch (error) {
+        showAlert(error.message, 'error');
+    }
+}
+
+// Simulated Backend Functions
+async function authenticateUser(email, password) {
+    return new Promise((resolve, reject) => {
+        // Simulate network delay
+        setTimeout(() => {
+            const user = usersDatabase.find(u => 
+                (u.email === email || u.username === email) && u.password === password
+            );
+            
+            if (user) {
+                resolve(user);
+            } else {
+                reject(new Error('Invalid email/username or password'));
+            }
+        }, 800);
+    });
+}
+
+async function registerUser(userData) {
+    return new Promise((resolve, reject) => {
+        // Simulate network delay
+        setTimeout(() => {
+            // Check if email or username already exists
+            const emailExists = usersDatabase.some(u => u.email === userData.email);
+            const usernameExists = usersDatabase.some(u => u.username === userData.username);
+            
+            if (emailExists) {
+                reject(new Error('Email already registered'));
+                return;
+            }
+            
+            if (usernameExists) {
+                reject(new Error('Username already taken'));
+                return;
+            }
+            
+            // Create new user object
+            const newUser = {
+                id: Date.now().toString(),
+                username: userData.username,
+                email: userData.email,
+                password: userData.password, // In real app, this would be hashed
+                pronouns: userData.pronouns || '',
+                accessibilityNeeds: userData.accessibilityNeeds || [],
+                createdAt: new Date().toISOString(),
+                avatar: null,
+                status: 'online'
+            };
+            
+            // Add to database
+            usersDatabase.push(newUser);
+            resolve(newUser);
+        }, 1000);
+    });
+}
+
+// UI Update Functions
+function updateUIAfterLogin(user) {
+    // Update header
+    userName.textContent = user.username;
+    
+    // Update avatar placeholder
+    if (user.avatar) {
+        userAvatar.style.backgroundImage = `url(${user.avatar})`;
+    } else {
+        userAvatar.textContent = user.username.charAt(0).toUpperCase();
+    }
+    
+    // Show user info
+    userInfo.style.display = 'flex';
+    
+    // Update login link to profile
+    const loginLink = document.getElementById('login-link');
+    loginLink.textContent = 'Profile';
+    loginLink.href = '#';
+    loginLink.removeEventListener('click', showAuthModal);
+    loginLink.addEventListener('click', showProfile);
+}
+
+function showProfile(e) {
+    e.preventDefault();
+    // Implement profile viewing
+    alert(`Profile page for ${currentUser.username} would appear here`);
+}
+
+function showAlert(message, type) {
+    // Remove any existing alerts
+    const existingAlert = document.querySelector('.auth-alert');
+    if (existingAlert) {
+        existingAlert.remove();
+    }
+    
+    const alertElement = document.createElement('div');
+    alertElement.className = `auth-alert ${type}`;
+    alertElement.textContent = message;
+    
+    const authForms = document.querySelectorAll('.auth-form.active');
+    if (authForms.length > 0) {
+        authForms[0].prepend(alertElement);
+        
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            alertElement.remove();
+        }, 5000);
+    }
+}
+
+// Avatar Creation Completion
+document.getElementById('save-avatar').addEventListener('click', function() {
+    // In a real implementation, this would save the avatar to the user's profile
+    currentUser.avatar = 'path/to/avatar/image.png'; // Placeholder
+    userAvatar.style.backgroundImage = `url(${currentUser.avatar})`;
+    hideModal('avatar-creator');
+    showAlert('Avatar saved successfully!', 'success');
+});
+
+        // Keyboard navigation for accessibility
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                modals.forEach(modal => {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
